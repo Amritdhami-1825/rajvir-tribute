@@ -1,0 +1,14 @@
+{
+  "name": "rajvir-tribute",
+  "version": "1.0.0",
+  "description": "Tribute website for Punjabi singer Rajvir Jawanda",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.0.0",
+    "cors": "^2.8.5"
+  }
+}
