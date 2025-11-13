@@ -1,82 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tribute to Rajvir Jawanda</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tribute to Rajvir Jawanda</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Dancing Script', cursive;
+    background-color: #121212;
+    color: #f0f0f0;
+  }
+  header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #1f1f1f;
+    padding: 15px 0;
+    text-align: center;
+    z-index: 1000;
+  }
+  nav a {
+    color: #ff4081;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1.15em;
+  }
+  nav a:hover { text-decoration: underline; }
+
+  section {
+    padding: 120px 20px 80px 20px;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  h1, h2, p, .btn, .gallery-container, .list-container {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+  }
+  h1 { font-size: 3.2em; margin-bottom: 20px; }
+  h2 { font-size: 2.6em; margin-bottom: 20px; }
+  p { font-size: 1.4em; max-width: 900px; margin: 0 auto 20px auto; line-height: 1.8; text-align: justify; }
+  .btn {
+    display: inline-block;
+    padding: 15px 35px;
+    text-decoration: none;
+    font-size: 1.3em;
+    border-radius: 12px;
+    transition: all 0.3s;
+    font-weight: bold;
+    margin: 12px 10px 0 10px;
+  }
+  .btn:hover { transform: scale(1.05); }
+  .gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  .gallery-container img {
+    width: 300px;
+    border-radius: 15px;
+    border: 2px solid #fff;
+    transition: transform 0.3s;
+  }
+  .gallery-container img:hover { transform: scale(1.05); }
+  .list-container { max-width: 700px; margin: 20px auto; text-align: left; font-size: 1.3em; line-height: 1.6; }
+  .list-container a { color: #ff80ab; text-decoration: none; }
+  .list-container a:hover { text-decoration: underline; }
+  footer { text-align: center; padding: 40px 20px; color: #fff; background-color: #1f1f1f; font-size: 1.2em; }
+  .spacer { height: 70px; }
+
+  /* Section colors */
+  #home { background-color: #1f1f1f; }
+  #biography { background-color: #ff4081; }
+  #gallery { background-color: #2196f3; }
+  #songs { background-color: #9c27b0; }
+  #awards { background-color: #ffffff; color: #000; }
+  #tribute { background-color: #4caf50; }
+
+  /* Wavy effect */
+  section::before, section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: inherit;
+    z-index: 1;
+  }
+  section::before { top: -40px; border-radius: 50% 50% 0 0 / 50% 50% 0 0; }
+  section::after { bottom: -40px; border-radius: 0 0 50% 50% / 0 0 50% 50%; }
+  section > * { position: relative; z-index: 2; }
+
+  /* Fade-in active class */
+  .fade-in { opacity: 1 !important; transform: translateY(0) !important; }
+
+  /* Buttons colors */
+  .btn-pink  { background-color: #ff4081; color: #fff; }
+  .btn-blue  { background-color: #2196f3; color: #fff; }
+  .btn-green { background-color: #4caf50; color: #fff; }
+  .btn-orange{ background-color: #ff9800; color: #fff; }
+  .btn-purple{ background-color: #9c27b0; color: #fff; }
+  .btn-white { background-color: #ffffff; color: #000; }
+
+  /* Home background parallax */
+  .home-bg {
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Rajvir_Jawanda_%28Cropped%29.jpg/250px-Rajvir_Jawanda_%28Cropped%29.jpg') no-repeat center center;
+    background-size: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transform: translateY(0);
+    animation: wave 20s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+
+  @keyframes wave {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-15px); }
+    50% { transform: translateY(-30px); }
+    75% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+  }
+
+  /* Cloudy effect for all sections */
+  section::before {
+    background: url('https://i.ibb.co/f4j2VhF/clouds.png') repeat-x;
+    background-size: contain;
+    animation: cloudMove 60s linear infinite;
+    opacity: 0.15;
+  }
+
+  @keyframes cloudMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Snow effect */
+  .snowflake {
+    position: absolute;
+    top: -10px;
+    color: #fff;
+    font-size: 1em;
+    z-index: 10;
+    user-select: none;
+    animation: fall 10s linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) translateX(0); opacity: 1; }
+    100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
+  }
+</style>
 </head>
 <body>
-  <div class="overlay"></div>
 
-  <header>
-    <h1>🎤 Tribute to Rajvir Jawanda 🎶</h1>
-    <p class="subtitle">Punjabi Pride | Singer | Performer | Actor</p>
-  </header>
-
+<header>
   <nav>
-    <button class="btn bio" onclick="showSection('biography')">Biography</button>
-    <button class="btn songs" onclick="showSection('songs')">Songs</button>
-    <button class="btn gallery" onclick="showSection('gallery')">Gallery</button>
-    <button class="btn awards" onclick="showSection('awards')">Awards</button>
-    <button class="btn tribute" onclick="showSection('tribute')">Tribute</button>
+    <a href="#home">Home</a>
+    <a href="#biography">Biography</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#songs">Songs</a>
+    <a href="#awards">Awards</a>
+    <a href="#tribute">Tribute</a>
   </nav>
+</header>
 
-  <main>
-    <!-- Biography -->
-    <section id="biography">
-      <h2>Biography</h2>
-      <p>Rajvir Jawanda is a popular Punjabi singer, actor, and live performer known for his powerful voice and energetic presence. 
-      Born and raised in Punjab, India, he began his career with folk and romantic Punjabi tracks. 
-      His hit songs like <b>"Surname"</b>, <b>"Kangani"</b>, and <b>"Chandigarh"</b> made him a household name in the Punjabi music industry.</p>
-    </section>
+<div class="spacer"></div>
 
-    <!-- Songs -->
-    <!-- Songs -->
-<section id="songs">
-  <h2>🎵 Popular Songs</h2>
-  <ul>
-    <li>Rabb Karke — <a href="https://www.youtube.com/watch?v=01g-XbQyNsc" target="_blank">🎧 Listen</a></li>
-    <li>Khush Reha Kar — <a href="https://www.youtube.com/watch?v=_HKz56n4euA" target="_blank">🎧 Listen</a></li>
-    <li>Zor — <a href="https://www.youtube.com/watch?v=HrFukgmLusc" target="_blank">🎧 Listen</a></li>
-    <li>Do Ni Sajna — <a href="https://www.youtube.com/watch?v=gGSlK0kqk_g" target="_blank">🎧 Listen</a></li>
-    <li>Tu Dis Painda — <a href="https://www.youtube.com/watch?v=gGSlK0kqk_g" target="_blank">🎧 Listen</a></li>
-  </ul>
-</section>
-
-
-    <!-- Gallery -->
-    <!-- Gallery -->
-<section id="gallery">
-  <h2>📸 Gallery</h2>
-  <div class="gallery-container">
-    <img src="https://cdn.starclinch.in/artist/rajvir-jawanda/rajvir_jawanda.jpg" alt="Rajvir Jawanda StarClinch Profile">
+<!-- Home Section -->
+<section id="home">
+  <div class="home-bg"></div>
+  <div style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+    z-index: 1;
+  "></div>
+  <div style="position: relative; z-index: 2; padding: 120px 20px 80px 20px; text-align:center;">
+    <h1>🌹 Tribute to Rajvir Jawanda 🌹</h1>
+    <p>Rajvir Jawanda was not just a singer — he was the heartbeat of Punjab. Born in Pona near Jagraon, his journey from humble beginnings to becoming one of Punjab's most loved artists is inspiring. Songs like <strong>Kali Jawande Di</strong>, <strong>Khush Reha Kar</strong>, <strong>Sardaar Bandey</strong>, and <strong>Do Ni Sajna</strong> made millions connect with Punjab's soul. His untimely passing in October 2025 left a void, but his legacy continues in hearts worldwide.</p>
+    <a class="btn btn-pink"   href="#biography">Read Biography</a>
+    <a class="btn btn-blue"   href="#gallery">View Gallery</a>
+    <a class="btn btn-purple" href="#songs">Songs</a>
+    <a class="btn btn-white"  href="#awards">Awards</a>
+    <a class="btn btn-green"  href="#tribute">Leave Tribute</a>
   </div>
 </section>
 
+<!-- Biography Section -->
+<section id="biography">
+  <h2>Biography</h2>
+  <p>Born on 20 June 1990 in Pona, near Jagraon, Rajvir Jawanda grew up immersed in Punjab's folk traditions. Early on, he displayed a passion for music, learning folk instruments and singing at local festivals. He rose to fame with hits like "Kali Jawande Di" and "Khush Reha Kar", blending traditional Punjabi folk with modern beats. Over the years, he became an icon for Punjabi youth, representing pride, humility, and cultural identity. His performances were electrifying, his music heartfelt, and his legacy everlasting. Despite his untimely passing in 2025, his influence and songs continue to inspire generations across the globe.</p>
+</section>
 
-    <!-- Awards -->
-    <section id="awards">
-      <h2>Awards & Recognition</h2>
-      <p>🏆 Rajvir Jawanda has received multiple awards for his outstanding contribution to Punjabi folk and pop music. 
-      He has been honored as the <b>Best Folk Singer</b> and recognized by various platforms including YouTube for trending hits. 
-      His dedication to Punjabi culture and language continues to inspire millions.</p>
-    </section>
+<!-- Gallery Section -->
+<section id="gallery">
+  <h2>📸 Gallery</h2>
+  <div class="gallery-container">
+    <img src="https://www.wikigraphy.in/wp-content/uploads/2025/03/Rajvir-Jawanda.jpg" alt="Rajvir Jawanda 1">
+    <img src="https://static.toiimg.com/thumb/124382447.jpg?imgsize=40436&photoid=124382447&width=400&resizemode=4" alt="Rajvir Jawanda 2">
+  </div>
+</section>
 
-    <!-- Tribute -->
-    <section id="tribute">
-      <h2>Tribute</h2>
-      <p class="tribute-text">“Rajvir Jawanda is not just a singer — he is a symbol of Punjabi pride, 
-      culture, and pure passion for music. His voice carries emotions that touch hearts across the globe. 
-      May his journey continue to inspire the youth and bring more glory to Punjab!” 💜</p>
-    </section>
-  </main>
+<!-- Songs Section -->
+<section id="songs">
+  <h2>🎵 Popular Songs</h2>
+  <div class="list-container">
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=01g-XbQyNsc" target="_blank">Rabb Karke</a></li>
+      <li><a href="https://www.youtube.com/watch?v=HrFukgmLusc" target="_blank">Zor</a></li>
+      <li><a href="https://www.youtube.com/watch?v=gGSlK0kqk_g" target="_blank">Tu Dis Painda</a></li>
+      <li><a href="https://www.youtube.com/watch?v=gd8s8mAUcC4" target="_blank">Jogiya</a></li>
+      <li><a href="https://www.youtube.com/watch?v=ysz_BDL8hhY" target="_blank">Kali Jawande Di</a></li>
+      <li><a href="https://www.youtube.com/watch?v=_HKz56n4euA" target="_blank">Khush Reha Kar</a></li>
+      <li><a href="https://www.youtube.com/watch?v=ABcdef12345" target="_blank">Sardaar Bandey</a></li>
+      <li><a href="https://www.youtube.com/watch?v=MNopQR67890" target="_blank">Do Ni Sajna</a></li>
+      <li><a href="https://www.youtube.com/watch?v=XYz123abc45" target="_blank">Landlord</a></li>
+      <li><a href="https://www.youtube.com/watch?v=PQrsTuv5432" target="_blank">Surname</a></li>
+    </ul>
+  </div>
+</section>
 
-  <footer>
-    <p>Created with 💜 by Amritpal Singh | College Tribute Project</p>
-  </footer>
+<!-- Awards Section -->
+<section id="awards">
+  <h2>🏆 Awards & Achievements</h2>
+  <div class="list-container">
+    <ul>
+      <li>Best Punjabi Singer – 2020</li>
+      <li>Punjabi Music Excellence Award – 2021</li>
+      <li>Top Folk Artist Award – 2022</li>
+      <li>Global Punjabi Icon – 2023</li>
+      <li>Lifetime Achievement (Posthumous) – 2025</li>
+      <li>Outstanding Contribution to Punjabi Music – 2024</li>
+    </ul>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- Tribute Section -->
+<section id="tribute">
+  <h2>🎶 Tribute</h2>
+  <p style="font-size:1.5em; max-width:900px; margin: 0 auto; line-height:1.9; text-align: justify;">
+    🌸🌹❤️ Rajvir Jawanda, your voice was a gift to the world. Every note you sang carried the warmth of Punjab, every lyric told a story of love, pride, and courage. Your music bridged hearts across continents, making every listener feel the beauty of our land.  
+    💐 Through timeless tracks like <strong>Kali Jawande Di</strong>, <strong>Khush Reha Kar</strong>, <strong>Sardaar Bandey</strong>, and <strong>Do Ni Sajna</strong>, you shared joy, sorrow, and hope. Your melodies were more than songs—they were memories, lessons, and celebrations of life.  
+    🎶 Even though you left us too soon in October 2025, your legacy lives on in every festival, every dance, every celebration where your music plays. You taught us to love our roots, respect our people, and pursue our dreams with passion.  
+    🌹 Fans around the world bow their heads in gratitude and admiration. Your energy, smile, and tunes remain immortal.  
+    💖 We will remember you forever, Rajvir Jawanda, in our hearts, our songs, and our souls. Your music will never fade. 🌸🌹❤️
+  </p>
+  <a class="btn btn-green" href="#home">🏠 Back to Top</a>
+</section>
+
+<footer>
+  ❤️ Created with love for Rajvir Jawanda’s fans.
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const elements = document.querySelectorAll('h1, h2, p, .btn, .gallery-container, .list-container');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, { threshold: 0.1 });
+  elements.forEach(el => observer.observe(el));
+
+  // Home background parallax scroll
+  window.addEventListener('scroll', function() {
+    const bg = document.querySelector('.home-bg');
+    const offset = window.pageYOffset;
+    bg.style.transform = 'translateY(' + offset * 0.2 + 'px)';
+  });
+
+  // Snowflakes effect
+  function createSnowflakes(num) {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+      for(let i = 0; i < num; i++){
+        const snow = document.createElement('div');
+        snow.classList.add('snowflake');
+        snow.style.left = Math.random() * 100 + 'vw';
+        snow.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        snow.textContent = '❄️';
+        snow.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        section.appendChild(snow);
+      }
+    });
+  }
+  createSnowflakes(20); // 20 snowflakes per section
+</script>
+
 </body>
 </html>
